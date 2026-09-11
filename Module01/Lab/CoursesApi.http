@@ -1,0 +1,37 @@
+@host = http://localhost:5052
+
+GET {{host}}/api/courses
+
+###
+
+GET {{host}}/api/courses/1
+
+###
+
+GET {{host}}/api/courses/100
+
+###
+
+POST {{host}}/api/courses
+Content-Type: application/json
+
+{
+  "name": "Algorithms",
+  "teacher": "Teacher 3",
+  "credits": 6
+}
+
+###
+
+PUT {{host}}/api/courses/2
+Content-Type: application/json
+
+{
+  "name": "Databases II",
+  "teacher": "Teacher 2",
+  "credits": 5
+}
+
+###
+
+DELETE {{host}}/api/courses/1

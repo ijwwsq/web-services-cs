@@ -1,0 +1,17 @@
+@host = http://localhost:5072
+
+GET {{host}}/api/students
+
+###
+
+GET {{host}}/api/students/1
+
+###
+
+POST {{host}}/api/students
+Content-Type: application/json
+
+{
+  "name": "Arman",
+  "age": 22
+}

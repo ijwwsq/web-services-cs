@@ -1,0 +1,24 @@
+@host = http://localhost:5062
+
+GET {{host}}/api/games
+
+###
+
+GET {{host}}/api/games/2
+
+###
+
+GET {{host}}/api/games/100
+
+###
+
+POST {{host}}/api/games
+Content-Type: application/json
+
+{
+  "title": "Stardew Valley",
+  "genre": "Simulation",
+  "developer": "ConcernedApe",
+  "releaseYear": 2016,
+  "price": 14.99
+}
