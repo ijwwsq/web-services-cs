@@ -12,6 +12,54 @@
 dotnet run --project Module02/Lab --launch-profile https
 ```
 
+## Скриншоты Swagger
+
+### Лабораторная, задачи
+
+Список реализованных методов:
+
+![Swagger](screenshots/lab-swagger.png)
+
+GET /api/tasks:
+
+![GET](screenshots/lab-get.png)
+
+POST /api/tasks:
+
+![POST](screenshots/lab-post.png)
+
+PUT /api/tasks/{id}:
+
+![PUT](screenshots/lab-put.png)
+
+DELETE /api/tasks/{id}:
+
+![DELETE](screenshots/lab-delete.png)
+
+### Практическая, студенты
+
+GET /api/students:
+
+![GET](screenshots/practice-get.png)
+
+GET /api/students/100, несуществующий id:
+
+![404](screenshots/practice-404.png)
+
+POST /api/students:
+
+![POST](screenshots/practice-post.png)
+
+### Домашнее задание, книги
+
+GET /api/books:
+
+![GET](screenshots/hw-get.png)
+
+POST /api/books:
+
+![POST](screenshots/hw-post.png)
+
 ## Контрольные вопросы к лабораторной
 
 ### 1. Что такое Web API?
