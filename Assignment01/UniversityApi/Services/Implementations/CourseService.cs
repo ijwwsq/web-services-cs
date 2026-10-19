@@ -38,19 +38,6 @@ public class CourseService : ICourseService
         return mapper.Map<CourseDto>(course);
     }
 
-    // Вторая версия API использует те же данные и те же проверки, меняется только контракт ответа.
-    public async Task<IReadOnlyList<CourseDetailsDto>> GetAllDetailedAsync(int? teacherId, int? minCredits, string? search)
-    {
-        var entities = await courses.GetAllAsync(teacherId, minCredits, search);
-        return mapper.Map<IReadOnlyList<CourseDetailsDto>>(entities);
-    }
-
-    public async Task<CourseDetailsDto> GetDetailedByIdAsync(int id)
-    {
-        var course = await courses.GetByIdAsync(id) ?? throw NotFound(id);
-        return mapper.Map<CourseDetailsDto>(course);
-    }
-
     public async Task<CourseDto> CreateAsync(CourseCreateDto dto)
     {
         await EnsureTeacherExists(dto.TeacherId);

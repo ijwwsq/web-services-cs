@@ -19,7 +19,6 @@ public class CourseRepository : ICourseRepository
         var query = context.Courses
             .AsNoTracking()
             .Include(c => c.Teacher)
-            .Include(c => c.Enrollments)
             .AsQueryable();
 
         if (teacherId.HasValue)
@@ -45,7 +44,6 @@ public class CourseRepository : ICourseRepository
     {
         return await context.Courses
             .Include(c => c.Teacher)
-            .Include(c => c.Enrollments)
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 

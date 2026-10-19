@@ -1,5 +1,3 @@
-using Asp.Versioning;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UniversityApi.Common;
 using UniversityApi.Dtos.Enrollments;
@@ -8,10 +6,8 @@ using UniversityApi.Services.Interfaces;
 namespace UniversityApi.Controllers;
 
 [ApiController]
-[ApiVersionNeutral]
 [Route("api/enrollments")]
 [Produces("application/json")]
-[Authorize]
 public class EnrollmentsController : ControllerBase
 {
     private readonly IEnrollmentService enrollments;
@@ -22,7 +18,6 @@ public class EnrollmentsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = Roles.Admin)]
     [ProducesResponseType(typeof(ReturnResult<IReadOnlyList<EnrollmentDto>>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
@@ -40,7 +35,6 @@ public class EnrollmentsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = Roles.Admin + "," + Roles.Student)]
     [ProducesResponseType(typeof(ReturnResult<EnrollmentDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status404NotFound)]
@@ -56,7 +50,6 @@ public class EnrollmentsController : ControllerBase
     }
 
     [HttpPut("{id:int}/grade")]
-    [Authorize(Roles = Roles.Admin + "," + Roles.Teacher)]
     [ProducesResponseType(typeof(ReturnResult<EnrollmentDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status404NotFound)]
@@ -67,7 +60,6 @@ public class EnrollmentsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = Roles.Admin)]
     [ProducesResponseType(typeof(ReturnResult<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
