@@ -11,12 +11,18 @@ public class StudentService : IStudentService
 {
     private readonly IStudentRepository students;
     private readonly IMapper mapper;
+    private readonly ICurrentUser currentUser;
     private readonly ILogger<StudentService> logger;
 
-    public StudentService(IStudentRepository students, IMapper mapper, ILogger<StudentService> logger)
+    public StudentService(
+        IStudentRepository students,
+        IMapper mapper,
+        ICurrentUser currentUser,
+        ILogger<StudentService> logger)
     {
         this.students = students;
         this.mapper = mapper;
+        this.currentUser = currentUser;
         this.logger = logger;
     }
 
@@ -28,12 +34,14 @@ public class StudentService : IStudentService
 
     public async Task<StudentDto> GetByIdAsync(int id)
     {
+        EnsureOwnStudentData(id);
         var student = await students.GetByIdAsync(id) ?? throw NotFound(id);
         return mapper.Map<StudentDto>(student);
     }
 
     public async Task<StudentWithCoursesDto> GetWithCoursesAsync(int id)
     {
+        EnsureOwnStudentData(id);
         var student = await students.GetWithCoursesAsync(id) ?? throw NotFound(id);
         return mapper.Map<StudentWithCoursesDto>(student);
     }
@@ -76,6 +84,24 @@ public class StudentService : IStudentService
         var student = await students.GetByIdAsync(id) ?? throw NotFound(id);
         await students.DeleteAsync(student);
         logger.LogInformation("Student {StudentId} deleted", id);
+    }
+
+    // Роли мало: студент видит только собственные данные, иначе чужие оценки были бы доступны любому студенту.
+    private void EnsureOwnStudentData(int studentId)
+    {
+        if (!currentUser.IsInRole(Roles.Student) || currentUser.IsInRole(Roles.Admin))
+        {
+            return;
+        }
+
+        if (currentUser.StudentId != studentId)
+        {
+            logger.LogWarning(
+                "User {UserName} tried to read data of student {StudentId}",
+                currentUser.UserName,
+                studentId);
+            throw ApiException.Forbidden("You can only access your own student data");
+        }
     }
 
     private ApiException NotFound(int id)

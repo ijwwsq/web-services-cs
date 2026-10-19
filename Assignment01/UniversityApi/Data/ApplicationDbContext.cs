@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UniversityApi.Models;
 
 namespace UniversityApi.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -16,6 +17,8 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Student>()
             .HasIndex(s => s.Email)
             .IsUnique();
@@ -60,6 +63,19 @@ public class ApplicationDbContext : DbContext
 
             enrollment.HasIndex(e => new { e.StudentId, e.CourseId })
                 .IsUnique();
+        });
+
+        modelBuilder.Entity<ApplicationUser>(user =>
+        {
+            user.HasOne(u => u.Teacher)
+                .WithMany()
+                .HasForeignKey(u => u.TeacherId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            user.HasOne(u => u.Student)
+                .WithMany()
+                .HasForeignKey(u => u.StudentId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
     }
 }

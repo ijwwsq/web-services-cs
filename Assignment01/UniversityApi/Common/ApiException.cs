@@ -19,4 +19,10 @@ public class ApiException : Exception
 
     public static ApiException BadRequest(string errorCode, string message) =>
         new(StatusCodes.Status400BadRequest, errorCode, message);
+
+    public static ApiException Unauthorized(string errorCode, string message) =>
+        new(StatusCodes.Status401Unauthorized, errorCode, message);
+
+    public static ApiException Forbidden(string message) =>
+        new(StatusCodes.Status403Forbidden, ErrorCodes.Forbidden, message);
 }

@@ -1,0 +1,32 @@
+@model UniversityClient.Models.CourseItem
+@{
+    ViewData["Title"] = "Курс";
+}
+
+<h1>Курс</h1>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+else if (Model != null)
+{
+    <dl class="row">
+        <dt class="col-sm-3">Id</dt>
+        <dd class="col-sm-9">@Model.Id</dd>
+
+        <dt class="col-sm-3">Название</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Описание</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+
+        <dt class="col-sm-3">Кредиты</dt>
+        <dd class="col-sm-9">@Model.Credits</dd>
+
+        <dt class="col-sm-3">Преподаватель</dt>
+        <dd class="col-sm-9">@Model.TeacherName</dd>
+    </dl>
+}
+
+<a asp-action="Index">К списку курсов</a>

@@ -1,3 +1,5 @@
+using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UniversityApi.Common;
 using UniversityApi.Dtos.Teachers;
@@ -6,8 +8,10 @@ using UniversityApi.Services.Interfaces;
 namespace UniversityApi.Controllers;
 
 [ApiController]
+[ApiVersionNeutral]
 [Route("api/teachers")]
 [Produces("application/json")]
+[Authorize]
 public class TeachersController : ControllerBase
 {
     private readonly ITeacherService teachers;
@@ -35,6 +39,7 @@ public class TeachersController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = Roles.Admin)]
     [ProducesResponseType(typeof(ReturnResult<TeacherDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status409Conflict)]
@@ -46,6 +51,7 @@ public class TeachersController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     [ProducesResponseType(typeof(ReturnResult<TeacherDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(int id, TeacherUpdateDto dto)
@@ -55,6 +61,7 @@ public class TeachersController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     [ProducesResponseType(typeof(ReturnResult<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ReturnResult<object>), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)

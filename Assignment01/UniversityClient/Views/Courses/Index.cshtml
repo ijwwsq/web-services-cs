@@ -1,0 +1,42 @@
+@model List<UniversityClient.Models.CourseItem>
+@{
+    ViewData["Title"] = "Курсы";
+}
+
+<h1>Курсы университета</h1>
+<p class="text-muted">Данные получены по HTTP из University Course Management API.</p>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+else if (!Model.Any())
+{
+    <div class="alert alert-info">Курсов пока нет.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Название</th>
+                <th>Кредиты</th>
+                <th>Преподаватель</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                <td>@course.Credits</td>
+                <td>@course.TeacherName</td>
+                <td><a asp-action="Details" asp-route-id="@course.Id">подробнее</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

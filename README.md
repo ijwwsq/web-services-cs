@@ -9,4 +9,4 @@
 
 ## Итоговое задание
 
-[Assignment01](Assignment01) - University Course Management API: студенты, преподаватели, курсы и записи на курсы. EF Core и PostgreSQL, репозитории, сервисы, DTO, AutoMapper, единый формат ответа, логирование и Swagger.
+[Assignment01](Assignment01) - University Course Management API: студенты, преподаватели, курсы и записи на курсы. EF Core и PostgreSQL, репозитории, сервисы, DTO, AutoMapper, единый формат ответа, логирование и Swagger. Во второй части добавлены JWT, ASP.NET Core Identity, роли, CORS, версионирование API и клиентское приложение [UniversityClient](Assignment01/UniversityClient).
